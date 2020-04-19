@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../screen/filters_screen.dart';
+import '../screens/orders_screen.dart';
+import '../screens/user_product_screen.dart';
+import '../providers/auth.dart';
+import '../helpers/custom_route.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -8,59 +12,93 @@ class MainDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: <Widget>[
-          Container(
-            height: 150,
-            width: double.infinity,
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.all(20),
-            color: Theme.of(context).accentColor,
-            child: Text(
-              'Meals',
-              style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 30,
-                  color: Theme.of(context).primaryColor),
-            ),
+          AppBar(
+            title: Text('Shop App'),
+            automaticallyImplyLeading: false,
           ),
-          SizedBox(
-            height: 20,
-          ),
+          //  SizedBox(
+          //   height: 20,
+          // ),
+          Divider(),
           ListTile(
-            onTap: (){
+            onTap: () {
               Navigator.of(context).pushReplacementNamed('/');
             },
             leading: Icon(
-              Icons.restaurant_menu,
+              Icons.shop,
               size: 26,
             ),
             title: Text(
-              'Meals',
+              'Shop',
               style: TextStyle(
-                fontSize: 24,
-                fontFamily: 'RobotoCondensed',
-                fontWeight: FontWeight.bold
-              ),
-
+                  fontSize: 24,
+                  fontFamily: 'RobotoCondensed',
+                  fontWeight: FontWeight.bold),
             ),
           ),
+          Divider(),
           ListTile(
-            onTap: (){
-              Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
+            onTap: () {
+              // Navigator.of(context)
+              //     .pushReplacementNamed(OrdersScreen.routeName);
+
+              Navigator.of(context).pushReplacement(
+                CustomRoute(builder: (ctx) => OrdersScreen()),
+              );
+              // Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
             },
             leading: Icon(
-              Icons.settings,
+              Icons.payment,
               size: 26,
             ),
             title: Text(
-              'Filters',
+              'Orders',
               style: TextStyle(
-                fontSize: 24,
-                fontFamily: 'RobotoCondensed',
-                fontWeight: FontWeight.bold
-              ),
-
+                  fontSize: 24,
+                  fontFamily: 'RobotoCondensed',
+                  fontWeight: FontWeight.bold),
             ),
-          )
+          ),
+          Divider(),
+          ListTile(
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(UserProductScreen.routeName);
+              // Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
+            },
+            leading: Icon(
+              Icons.edit,
+              size: 26,
+            ),
+            title: Text(
+              'Edit Product',
+              style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'RobotoCondensed',
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          Divider(),
+          ListTile(
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/');
+              Provider.of<Auth>(context, listen: false).logout();
+
+              // Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
+            },
+            leading: Icon(
+              Icons.exit_to_app,
+              size: 26,
+            ),
+            title: Text(
+              'Logout',
+              style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'RobotoCondensed',
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
         ],
       ),
     );
